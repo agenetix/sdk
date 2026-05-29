@@ -1,4 +1,4 @@
-name: Emcy SDK Tests (PR)
+name: MCP Stack SDK Tests (PR)
 
 on:
   pull_request:

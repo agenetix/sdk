@@ -1,28 +1,28 @@
 /**
- * Types for Emcy Telemetry SDK
+ * Types for MCP Stack Telemetry SDK
  * 
- * This SDK can be used standalone or integrated with the Emcy platform.
+ * This SDK can be used standalone or integrated with the MCP Stack platform.
  * When used standalone, provide a custom endpoint URL.
- * When used with Emcy platform, provide the API key from your dashboard.
+ * When used with MCP Stack platform, provide the API key from your dashboard.
  */
 
-export interface EmcyConfig {
+export interface McpStackTelemetryConfig {
   /**
    * API key for authentication. Required.
-   * Get this from the Emcy dashboard or your self-hosted telemetry server.
+   * Get this from the MCP Stack dashboard or your self-hosted telemetry server.
    */
   apiKey: string;
   
   /**
    * Telemetry endpoint URL. 
-   * Defaults to https://api.emcy.ai/v1/telemetry for Emcy cloud.
+   * Defaults to https://api.mcpstack.com/api/v1/telemetry for MCP Stack cloud.
    * Override for self-hosted or custom backends.
    */
   endpoint?: string;
   
   /**
    * MCP Server ID for linking telemetry to a specific server.
-   * Optional when the server is registered with Emcy platform.
+   * Optional when the server is registered with MCP Stack platform.
    */
   mcpServerId?: string;
   
