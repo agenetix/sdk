@@ -1,4 +1,4 @@
-name: Emcy SDK Tests (Main)
+name: MCP Stack SDK Tests (Main)
 
 on:
   push:

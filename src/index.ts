@@ -1,12 +1,12 @@
 /**
- * Emcy SDK - Telemetry for MCP servers
+ * MCP Stack SDK - Telemetry for MCP servers
  */
 
-export { EmcyTelemetry } from './telemetry.js';
+export { McpStackTelemetry } from './telemetry.js';
 export { TelemetryTransport } from './transport.js';
 
 export type {
-  EmcyConfig,
+  McpStackTelemetryConfig,
   ToolInvocation,
   TelemetryBatch,
 } from './types.js';
