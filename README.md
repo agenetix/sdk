@@ -1,8 +1,8 @@
-# @mcpstack/sdk
+# @agenetix/sdk
 
 Telemetry SDK for MCP (Model Context Protocol) servers. Track tool invocations, errors, and performance.
 
-[![npm version](https://badge.fury.io/js/%40emcy%2Fsdk.svg)](https://www.npmjs.com/package/@mcpstack/sdk)
+[![npm version](https://badge.fury.io/js/%40emcy%2Fsdk.svg)](https://www.npmjs.com/package/@agenetix/sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## What is this?
@@ -19,13 +19,13 @@ View your data in the [MCP Stack Dashboard](https://mcpstack.com).
 ## Installation
 
 ```bash
-npm install @mcpstack/sdk
+npm install @agenetix/sdk
 ```
 
 ## Quick Start
 
 ```typescript
-import { McpStackTelemetry } from '@mcpstack/sdk';
+import { McpStackTelemetry } from '@agenetix/sdk';
 
 // Initialize with your API key
 const mcpstack = new McpStackTelemetry({
@@ -127,9 +127,9 @@ The SDK reads these environment variables:
 | `MCPSTACK_MCP_SERVER_ID` | MCP server ID for grouping |
 | `MCPSTACK_DEBUG` | Set to `true` for debug logs |
 
-### With @mcpstack/openapi-to-mcp
+### With @agenetix/openapi-to-mcp
 
-If you generated your MCP server with [@mcpstack/openapi-to-mcp](https://www.npmjs.com/package/@mcpstack/openapi-to-mcp) and the `--mcpstack` flag, the SDK is already integrated. Just set your environment variables:
+If you generated your MCP server with [@agenetix/openapi-to-mcp](https://www.npmjs.com/package/@agenetix/openapi-to-mcp) and the `--mcpstack` flag, the SDK is already integrated. Just set your environment variables:
 
 ```bash
 MCPSTACK_API_KEY=your-api-key
@@ -142,7 +142,7 @@ MCPSTACK_MCP_SERVER_ID=mcp_xxxxxxxxxxxx
 ```typescript
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
-import { McpStackTelemetry } from '@mcpstack/sdk';
+import { McpStackTelemetry } from '@agenetix/sdk';
 
 const mcpstack = new McpStackTelemetry({
   apiKey: process.env.MCPSTACK_API_KEY!,
