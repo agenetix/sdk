@@ -44,10 +44,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/emcy-ai/mcpstack-sdk.git"
+    "url": "git+https://github.com/agenetix/mcpstack-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/emcy-ai/mcpstack-sdk/issues"
+    "url": "https://github.com/agenetix/mcpstack-sdk/issues"
   },
   "homepage": "https://mcpstack.com",
   "engines": {
