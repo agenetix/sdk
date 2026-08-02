@@ -1,4 +1,4 @@
-name: MCP Stack SDK Tests (PR)
+name: Agenetix SDK Tests (PR)
 
 on:
   pull_request:

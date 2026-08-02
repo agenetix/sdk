@@ -1,28 +1,28 @@
 /**
- * Types for MCP Stack Telemetry SDK
+ * Types for Agenetix Telemetry SDK
  * 
- * This SDK can be used standalone or integrated with the MCP Stack platform.
+ * This SDK can be used standalone or integrated with the Agenetix platform.
  * When used standalone, provide a custom endpoint URL.
- * When used with MCP Stack platform, provide the API key from your dashboard.
+ * When used with Agenetix platform, provide the API key from your dashboard.
  */
 
-export interface McpStackTelemetryConfig {
+export interface AgenetixTelemetryConfig {
   /**
    * API key for authentication. Required.
-   * Get this from the MCP Stack dashboard or your self-hosted telemetry server.
+   * Get this from the Agenetix dashboard or your self-hosted telemetry server.
    */
   apiKey: string;
   
   /**
    * Telemetry endpoint URL. 
-   * Defaults to https://api.mcpstack.com/api/v1/telemetry for MCP Stack cloud.
+   * Defaults to https://api.agenetix.com/api/v1/telemetry for Agenetix cloud.
    * Override for self-hosted or custom backends.
    */
   endpoint?: string;
   
   /**
    * MCP Server ID for linking telemetry to a specific server.
-   * Optional when the server is registered with MCP Stack platform.
+   * Optional when the server is registered with Agenetix platform.
    */
   mcpServerId?: string;
   
