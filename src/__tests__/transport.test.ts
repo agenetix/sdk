@@ -43,7 +43,7 @@ describe('TelemetryTransport', () => {
       await transport.send(createBatch());
 
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://api.agenetix.com/api/v1/telemetry',
+        'https://api.mcpstack.com/api/v1/telemetry',
         expect.any(Object)
       );
     });
@@ -215,7 +215,7 @@ describe('TelemetryTransport', () => {
       await transport.send(createBatch());
 
       expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('[agenetix] Sent 1 invocations')
+        expect.stringContaining('[mcpstack] Sent 1 invocations')
       );
 
       consoleSpy.mockRestore();
@@ -229,7 +229,7 @@ describe('TelemetryTransport', () => {
       await transport.send(createBatch());
 
       expect(consoleSpy).not.toHaveBeenCalledWith(
-        expect.stringContaining('[agenetix] Sent')
+        expect.stringContaining('[mcpstack] Sent')
       );
 
       consoleSpy.mockRestore();
