@@ -1,14 +1,14 @@
 /**
- * Agenetix Telemetry - Collects and batches tool invocation data
+ * MCP Stack Telemetry - Collects and batches tool invocation data
  */
 
-import type { AgenetixTelemetryConfig, ToolInvocation } from './types.js';
+import type { McpStackTelemetryConfig, ToolInvocation } from './types.js';
 import { TelemetryTransport } from './transport.js';
 
 const DEFAULT_BATCH_SIZE = 10;
 const DEFAULT_FLUSH_INTERVAL = 5000; // 5 seconds
 
-export class AgenetixTelemetry {
+export class McpStackTelemetry {
   private apiKey: string;
   private mcpServerId?: string;
   private transport: TelemetryTransport;
@@ -23,7 +23,7 @@ export class AgenetixTelemetry {
     mcpServerId?: string;
   } = {};
   
-  constructor(config: AgenetixTelemetryConfig) {
+  constructor(config: McpStackTelemetryConfig) {
     this.apiKey = config.apiKey;
     this.mcpServerId = config.mcpServerId;
     this.batchSize = config.batchSize || DEFAULT_BATCH_SIZE;
@@ -106,7 +106,7 @@ export class AgenetixTelemetry {
     this.queue.push(invocation);
     
     if (this.debug) {
-      console.error(`[agenetix] Logged: ${invocation.toolName} (${invocation.duration}ms, ${invocation.success ? 'success' : 'error'})`);
+      console.error(`[mcpstack] Logged: ${invocation.toolName} (${invocation.duration}ms, ${invocation.success ? 'success' : 'error'})`);
     }
     
     if (this.queue.length >= this.batchSize) {
@@ -115,7 +115,7 @@ export class AgenetixTelemetry {
   }
   
   /**
-   * Flush queued invocations to Agenetix
+   * Flush queued invocations to MCP Stack
    */
   async flush(): Promise<void> {
     if (this.queue.length === 0) return;
