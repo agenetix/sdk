@@ -1,9 +1,9 @@
 /**
- * Tests for AgenetixTelemetry class
+ * Tests for McpStackTelemetry class
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { AgenetixTelemetry } from '../telemetry.js';
+import { McpStackTelemetry } from '../telemetry.js';
 
 // Mock fetch globally
 const mockFetch = vi.fn();
@@ -14,7 +14,7 @@ vi.stubGlobal('crypto', {
   randomUUID: () => 'test-uuid-1234',
 });
 
-describe('AgenetixTelemetry', () => {
+describe('McpStackTelemetry', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     mockFetch.mockReset();
@@ -27,31 +27,31 @@ describe('AgenetixTelemetry', () => {
 
   describe('constructor', () => {
     it('should create instance with required config', () => {
-      const telemetry = new AgenetixTelemetry({ apiKey: 'test-key' });
-      expect(telemetry).toBeInstanceOf(AgenetixTelemetry);
+      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
+      expect(telemetry).toBeInstanceOf(McpStackTelemetry);
     });
 
     it('should accept optional mcpServerId', () => {
-      const telemetry = new AgenetixTelemetry({
+      const telemetry = new McpStackTelemetry({
         apiKey: 'test-key',
         mcpServerId: 'server-123',
       });
-      expect(telemetry).toBeInstanceOf(AgenetixTelemetry);
+      expect(telemetry).toBeInstanceOf(McpStackTelemetry);
     });
 
     it('should accept custom batchSize and flushInterval', () => {
-      const telemetry = new AgenetixTelemetry({
+      const telemetry = new McpStackTelemetry({
         apiKey: 'test-key',
         batchSize: 5,
         flushInterval: 1000,
       });
-      expect(telemetry).toBeInstanceOf(AgenetixTelemetry);
+      expect(telemetry).toBeInstanceOf(McpStackTelemetry);
     });
   });
 
   describe('setServerInfo', () => {
     it('should include server metadata in traced invocations', async () => {
-      const telemetry = new AgenetixTelemetry({ apiKey: 'test-key' });
+      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
       telemetry.setServerInfo('test-server', '1.0.0');
 
       // Use trace() which merges metadata (log() does not)
@@ -68,7 +68,7 @@ describe('AgenetixTelemetry', () => {
 
   describe('log', () => {
     it('should queue invocations', () => {
-      const telemetry = new AgenetixTelemetry({ apiKey: 'test-key', batchSize: 10 });
+      const telemetry = new McpStackTelemetry({ apiKey: 'test-key', batchSize: 10 });
 
       telemetry.log({
         invocationId: 'inv-1',
@@ -83,7 +83,7 @@ describe('AgenetixTelemetry', () => {
     });
 
     it('should auto-flush when batch size is reached', async () => {
-      const telemetry = new AgenetixTelemetry({
+      const telemetry = new McpStackTelemetry({
         apiKey: 'test-key', 
         batchSize: 2,
         flushInterval: 60000, // Long interval to avoid timer interference
@@ -117,7 +117,7 @@ describe('AgenetixTelemetry', () => {
 
   describe('trace', () => {
     it('should trace successful function execution', async () => {
-      const telemetry = new AgenetixTelemetry({ apiKey: 'test-key' });
+      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
 
       const result = await telemetry.trace('myTool', async () => {
         return { data: 'test result' };
@@ -135,7 +135,7 @@ describe('AgenetixTelemetry', () => {
     });
 
     it('should trace failed function execution', async () => {
-      const telemetry = new AgenetixTelemetry({ apiKey: 'test-key' });
+      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
 
       await expect(
         telemetry.trace('failingTool', async () => {
@@ -153,7 +153,7 @@ describe('AgenetixTelemetry', () => {
     });
 
     it('should include input and sessionId when provided', async () => {
-      const telemetry = new AgenetixTelemetry({ apiKey: 'test-key' });
+      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
 
       await telemetry.trace(
         'toolWithOptions',
@@ -171,7 +171,7 @@ describe('AgenetixTelemetry', () => {
 
   describe('flush', () => {
     it('should send queued invocations', async () => {
-      const telemetry = new AgenetixTelemetry({ apiKey: 'test-key' });
+      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
 
       telemetry.log({
         invocationId: 'inv-1',
@@ -185,14 +185,14 @@ describe('AgenetixTelemetry', () => {
 
       expect(mockFetch).toHaveBeenCalledTimes(1);
       const [url, options] = mockFetch.mock.calls[0];
-      expect(url).toBe('https://api.agenetix.com/api/v1/telemetry');
+      expect(url).toBe('https://api.mcpstack.com/api/v1/telemetry');
       expect(options.method).toBe('POST');
       expect(options.headers['Content-Type']).toBe('application/json');
       expect(options.headers['Authorization']).toBe('Bearer test-key');
     });
 
     it('should not send if queue is empty', async () => {
-      const telemetry = new AgenetixTelemetry({ apiKey: 'test-key' });
+      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
 
       await telemetry.flush();
 
@@ -200,7 +200,7 @@ describe('AgenetixTelemetry', () => {
     });
 
     it('should include mcpServerId in batch', async () => {
-      const telemetry = new AgenetixTelemetry({
+      const telemetry = new McpStackTelemetry({
         apiKey: 'test-key',
         mcpServerId: 'server-456',
       });
@@ -222,7 +222,7 @@ describe('AgenetixTelemetry', () => {
 
   describe('shutdown', () => {
     it('should flush remaining invocations', async () => {
-      const telemetry = new AgenetixTelemetry({ apiKey: 'test-key' });
+      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
 
       telemetry.log({
         invocationId: 'inv-1',
@@ -238,7 +238,7 @@ describe('AgenetixTelemetry', () => {
     });
 
     it('should stop flush timer', async () => {
-      const telemetry = new AgenetixTelemetry({
+      const telemetry = new McpStackTelemetry({
         apiKey: 'test-key',
         flushInterval: 1000,
       });
@@ -264,7 +264,7 @@ describe('AgenetixTelemetry', () => {
 
   describe('periodic flush', () => {
     it('should flush on interval', async () => {
-      const telemetry = new AgenetixTelemetry({
+      const telemetry = new McpStackTelemetry({
         apiKey: 'test-key',
         flushInterval: 1000,
         batchSize: 100, // High batch size so it won't auto-flush

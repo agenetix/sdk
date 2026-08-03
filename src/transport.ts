@@ -1,10 +1,10 @@
 /**
- * Transport layer for sending telemetry to Agenetix
+ * Transport layer for sending telemetry to MCP Stack
  */
 
 import type { TelemetryBatch } from './types.js';
 
-const DEFAULT_ENDPOINT = 'https://api.agenetix.com/api/v1/telemetry';
+const DEFAULT_ENDPOINT = 'https://api.mcpstack.com/api/v1/telemetry';
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
 
@@ -33,14 +33,14 @@ export class TelemetryTransport {
         
         if (response.ok) {
           if (this.debug) {
-            console.error(`[agenetix] Sent ${batch.invocations.length} invocations`);
+            console.error(`[mcpstack] Sent ${batch.invocations.length} invocations`);
           }
           return true;
         }
         
         // Don't retry on 4xx errors (client errors)
         if (response.status >= 400 && response.status < 500) {
-          console.error(`[agenetix] Client error: ${response.status} ${response.statusText}`);
+          console.error(`[mcpstack] Client error: ${response.status} ${response.statusText}`);
           return false;
         }
         
@@ -55,7 +55,7 @@ export class TelemetryTransport {
       }
     }
     
-    console.error(`[agenetix] Failed to send telemetry after ${MAX_RETRIES} attempts:`, lastError?.message);
+    console.error(`[mcpstack] Failed to send telemetry after ${MAX_RETRIES} attempts:`, lastError?.message);
     return false;
   }
   
