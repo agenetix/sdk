@@ -213,6 +213,21 @@ const mcpstack = new McpStackTelemetry({
 
 The endpoint should accept POST requests with the `TelemetryBatch` JSON body.
 
+## Publishing
+
+`publish-npm.yml` is the only npm publish entry point. Merging to `main` does not publish `latest`.
+
+- **Pull request against `main`** — publishes a preview dist-tag, for example `@agenetix/sdk@pr-12`. The workflow comments with the exact package ref.
+- **`v*` tag** (for example `v2.0.3`) — publishes `latest`. Bump `package.json` first; npm will not overwrite an already-published version.
+
+To try a preview in a platform PR, add the ref to `infra/preview-packages.json`:
+
+```json
+{
+  "@agenetix/sdk": "@agenetix/sdk@pr-12"
+}
+```
+
 ## License
 
 MIT © [MCP Stack](https://mcpstack.com)
