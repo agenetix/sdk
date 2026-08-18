@@ -7,14 +7,14 @@ Telemetry SDK for MCP (Model Context Protocol) servers. Track tool invocations, 
 
 ## What is this?
 
-This SDK adds observability to your MCP servers. When AI agents call your tools, MCP Stack tracks:
+This SDK adds observability to your MCP servers. When AI agents call your tools, Agenetix tracks:
 
 - **Tool invocations** - Which tools are called and how often
 - **Errors** - Failures with full context for debugging
 - **Performance** - Latency metrics and success rates
 - **Metadata** - Custom attributes for filtering and analysis
 
-View your data in the [MCP Stack Dashboard](https://mcpstack.com).
+View your data in the [Agenetix Dashboard](https://agenetix.com).
 
 ## Installation
 
@@ -30,7 +30,7 @@ import { McpStackTelemetry } from '@agenetix/sdk';
 // Initialize with your API key
 const mcpstack = new McpStackTelemetry({
   apiKey: process.env.MCPSTACK_API_KEY!,
-  endpoint: 'https://api.mcpstack.com/api/v1/telemetry',
+  endpoint: 'https://api.agenetix.com/api/v1/telemetry',
   mcpServerId: process.env.MCPSTACK_MCP_SERVER_ID,
 });
 
@@ -51,8 +51,8 @@ The main class for telemetry.
 
 ```typescript
 const mcpstack = new McpStackTelemetry({
-  apiKey: string;           // Required: Your MCP Stack API key
-  endpoint?: string;        // Optional: Telemetry endpoint (default: https://api.mcpstack.com/api/v1/telemetry)
+  apiKey: string;           // Required: Your Agenetix API key
+  endpoint?: string;        // Optional: Telemetry endpoint (default: https://api.agenetix.com/api/v1/telemetry)
   mcpServerId?: string;     // Optional: MCP server ID for grouping
   debug?: boolean;          // Optional: Enable debug logging
   flushInterval?: number;   // Optional: Batch flush interval in ms (default: 5000)
@@ -122,7 +122,7 @@ The SDK reads these environment variables:
 
 | Variable | Description |
 |----------|-------------|
-| `MCPSTACK_API_KEY` | Your MCP Stack API key (required) |
+| `MCPSTACK_API_KEY` | Your Agenetix API key (required) |
 | `MCPSTACK_TELEMETRY_URL` | Telemetry endpoint URL |
 | `MCPSTACK_MCP_SERVER_ID` | MCP server ID for grouping |
 | `MCPSTACK_DEBUG` | Set to `true` for debug logs |
@@ -133,7 +133,7 @@ If you generated your MCP server with [@agenetix/openapi-to-mcp](https://www.npm
 
 ```bash
 MCPSTACK_API_KEY=your-api-key
-MCPSTACK_TELEMETRY_URL=https://api.mcpstack.com/api/v1/telemetry
+MCPSTACK_TELEMETRY_URL=https://api.agenetix.com/api/v1/telemetry
 MCPSTACK_MCP_SERVER_ID=mcp_xxxxxxxxxxxx
 ```
 
@@ -230,5 +230,5 @@ To try a preview in a platform PR, add the ref to `infra/preview-packages.json`:
 
 ## License
 
-MIT © [MCP Stack](https://mcpstack.com)
+MIT © [Agenetix](https://agenetix.com)
 

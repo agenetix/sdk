@@ -1,5 +1,5 @@
 /**
- * MCP Stack SDK - Telemetry for MCP servers
+ * Agenetix SDK - Telemetry for MCP servers
  */
 
 export { McpStackTelemetry } from './telemetry.js';

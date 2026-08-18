@@ -1,11 +1,11 @@
 {
   "name": "@agenetix/sdk",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "description": "MCP Stack telemetry SDK for MCP servers - track tool invocations, errors, and performance",
+  "description": "Agenetix telemetry SDK for MCP servers - track tool invocations, errors, and performance",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -40,7 +40,7 @@
     "tools",
     "analytics"
   ],
-  "author": "MCP Stack <hello@mcpstack.com>",
+  "author": "Agenetix <hello@agenetix.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -49,7 +49,7 @@
   "bugs": {
     "url": "https://github.com/agenetix/sdk/issues"
   },
-  "homepage": "https://mcpstack.com",
+  "homepage": "https://agenetix.com",
   "engines": {
     "node": ">=20.0.0"
   },
