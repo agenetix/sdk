@@ -185,7 +185,7 @@ describe('McpStackTelemetry', () => {
 
       expect(mockFetch).toHaveBeenCalledTimes(1);
       const [url, options] = mockFetch.mock.calls[0];
-      expect(url).toBe('https://api.mcpstack.com/api/v1/telemetry');
+      expect(url).toBe('https://api.agenetix.com/api/v1/telemetry');
       expect(options.method).toBe('POST');
       expect(options.headers['Content-Type']).toBe('application/json');
       expect(options.headers['Authorization']).toBe('Bearer test-key');

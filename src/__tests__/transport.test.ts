@@ -43,7 +43,7 @@ describe('TelemetryTransport', () => {
       await transport.send(createBatch());
 
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://api.mcpstack.com/api/v1/telemetry',
+        'https://api.agenetix.com/api/v1/telemetry',
         expect.any(Object)
       );
     });

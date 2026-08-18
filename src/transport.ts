@@ -1,10 +1,10 @@
 /**
- * Transport layer for sending telemetry to MCP Stack
+ * Transport layer for sending telemetry to Agenetix
  */
 
 import type { TelemetryBatch } from './types.js';
 
-const DEFAULT_ENDPOINT = 'https://api.mcpstack.com/api/v1/telemetry';
+const DEFAULT_ENDPOINT = 'https://api.agenetix.com/api/v1/telemetry';
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
 

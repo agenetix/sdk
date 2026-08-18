@@ -1,5 +1,5 @@
 /**
- * MCP Stack Telemetry - Collects and batches tool invocation data
+ * Agenetix Telemetry - Collects and batches tool invocation data
  */
 
 import type { McpStackTelemetryConfig, ToolInvocation } from './types.js';
@@ -115,7 +115,7 @@ export class McpStackTelemetry {
   }
   
   /**
-   * Flush queued invocations to MCP Stack
+   * Flush queued invocations to Agenetix
    */
   async flush(): Promise<void> {
     if (this.queue.length === 0) return;
