@@ -2,11 +2,11 @@
  * Agenetix SDK - Telemetry for MCP servers
  */
 
-export { McpStackTelemetry } from './telemetry.js';
+export { EmcyTelemetry } from './telemetry.js';
 export { TelemetryTransport } from './transport.js';
 
 export type {
-  McpStackTelemetryConfig,
+  EmcyTelemetryConfig,
   ToolInvocation,
   TelemetryBatch,
 } from './types.js';

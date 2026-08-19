@@ -1,4 +1,4 @@
-name: MCP Stack SDK Tests (Main)
+name: Agenetix SDK Tests (Main)
 
 on:
   push:

@@ -1,9 +1,9 @@
 /**
- * Tests for McpStackTelemetry class
+ * Tests for EmcyTelemetry class
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { McpStackTelemetry } from '../telemetry.js';
+import { EmcyTelemetry } from '../telemetry.js';
 
 // Mock fetch globally
 const mockFetch = vi.fn();
@@ -14,7 +14,7 @@ vi.stubGlobal('crypto', {
   randomUUID: () => 'test-uuid-1234',
 });
 
-describe('McpStackTelemetry', () => {
+describe('EmcyTelemetry', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     mockFetch.mockReset();
@@ -27,31 +27,31 @@ describe('McpStackTelemetry', () => {
 
   describe('constructor', () => {
     it('should create instance with required config', () => {
-      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
-      expect(telemetry).toBeInstanceOf(McpStackTelemetry);
+      const telemetry = new EmcyTelemetry({ apiKey: 'test-key' });
+      expect(telemetry).toBeInstanceOf(EmcyTelemetry);
     });
 
     it('should accept optional mcpServerId', () => {
-      const telemetry = new McpStackTelemetry({
+      const telemetry = new EmcyTelemetry({
         apiKey: 'test-key',
         mcpServerId: 'server-123',
       });
-      expect(telemetry).toBeInstanceOf(McpStackTelemetry);
+      expect(telemetry).toBeInstanceOf(EmcyTelemetry);
     });
 
     it('should accept custom batchSize and flushInterval', () => {
-      const telemetry = new McpStackTelemetry({
+      const telemetry = new EmcyTelemetry({
         apiKey: 'test-key',
         batchSize: 5,
         flushInterval: 1000,
       });
-      expect(telemetry).toBeInstanceOf(McpStackTelemetry);
+      expect(telemetry).toBeInstanceOf(EmcyTelemetry);
     });
   });
 
   describe('setServerInfo', () => {
     it('should include server metadata in traced invocations', async () => {
-      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
+      const telemetry = new EmcyTelemetry({ apiKey: 'test-key' });
       telemetry.setServerInfo('test-server', '1.0.0');
 
       // Use trace() which merges metadata (log() does not)
@@ -68,7 +68,7 @@ describe('McpStackTelemetry', () => {
 
   describe('log', () => {
     it('should queue invocations', () => {
-      const telemetry = new McpStackTelemetry({ apiKey: 'test-key', batchSize: 10 });
+      const telemetry = new EmcyTelemetry({ apiKey: 'test-key', batchSize: 10 });
 
       telemetry.log({
         invocationId: 'inv-1',
@@ -83,7 +83,7 @@ describe('McpStackTelemetry', () => {
     });
 
     it('should auto-flush when batch size is reached', async () => {
-      const telemetry = new McpStackTelemetry({
+      const telemetry = new EmcyTelemetry({
         apiKey: 'test-key', 
         batchSize: 2,
         flushInterval: 60000, // Long interval to avoid timer interference
@@ -117,7 +117,7 @@ describe('McpStackTelemetry', () => {
 
   describe('trace', () => {
     it('should trace successful function execution', async () => {
-      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
+      const telemetry = new EmcyTelemetry({ apiKey: 'test-key' });
 
       const result = await telemetry.trace('myTool', async () => {
         return { data: 'test result' };
@@ -135,7 +135,7 @@ describe('McpStackTelemetry', () => {
     });
 
     it('should trace failed function execution', async () => {
-      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
+      const telemetry = new EmcyTelemetry({ apiKey: 'test-key' });
 
       await expect(
         telemetry.trace('failingTool', async () => {
@@ -153,7 +153,7 @@ describe('McpStackTelemetry', () => {
     });
 
     it('should include input and sessionId when provided', async () => {
-      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
+      const telemetry = new EmcyTelemetry({ apiKey: 'test-key' });
 
       await telemetry.trace(
         'toolWithOptions',
@@ -171,7 +171,7 @@ describe('McpStackTelemetry', () => {
 
   describe('flush', () => {
     it('should send queued invocations', async () => {
-      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
+      const telemetry = new EmcyTelemetry({ apiKey: 'test-key' });
 
       telemetry.log({
         invocationId: 'inv-1',
@@ -192,7 +192,7 @@ describe('McpStackTelemetry', () => {
     });
 
     it('should not send if queue is empty', async () => {
-      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
+      const telemetry = new EmcyTelemetry({ apiKey: 'test-key' });
 
       await telemetry.flush();
 
@@ -200,7 +200,7 @@ describe('McpStackTelemetry', () => {
     });
 
     it('should include mcpServerId in batch', async () => {
-      const telemetry = new McpStackTelemetry({
+      const telemetry = new EmcyTelemetry({
         apiKey: 'test-key',
         mcpServerId: 'server-456',
       });
@@ -222,7 +222,7 @@ describe('McpStackTelemetry', () => {
 
   describe('shutdown', () => {
     it('should flush remaining invocations', async () => {
-      const telemetry = new McpStackTelemetry({ apiKey: 'test-key' });
+      const telemetry = new EmcyTelemetry({ apiKey: 'test-key' });
 
       telemetry.log({
         invocationId: 'inv-1',
@@ -238,7 +238,7 @@ describe('McpStackTelemetry', () => {
     });
 
     it('should stop flush timer', async () => {
-      const telemetry = new McpStackTelemetry({
+      const telemetry = new EmcyTelemetry({
         apiKey: 'test-key',
         flushInterval: 1000,
       });
@@ -264,7 +264,7 @@ describe('McpStackTelemetry', () => {
 
   describe('periodic flush', () => {
     it('should flush on interval', async () => {
-      const telemetry = new McpStackTelemetry({
+      const telemetry = new EmcyTelemetry({
         apiKey: 'test-key',
         flushInterval: 1000,
         batchSize: 100, // High batch size so it won't auto-flush

@@ -25,32 +25,32 @@ npm install @agenetix/sdk
 ## Quick Start
 
 ```typescript
-import { McpStackTelemetry } from '@agenetix/sdk';
+import { EmcyTelemetry } from '@agenetix/sdk';
 
 // Initialize with your API key
-const mcpstack = new McpStackTelemetry({
-  apiKey: process.env.MCPSTACK_API_KEY!,
+const agenetix = new EmcyTelemetry({
+  apiKey: process.env.AGENETIX_API_KEY!,
   endpoint: 'https://api.agenetix.com/api/v1/telemetry',
-  mcpServerId: process.env.MCPSTACK_MCP_SERVER_ID,
+  mcpServerId: process.env.AGENETIX_MCP_SERVER_ID,
 });
 
 // Set server info for metadata
-mcpstack.setServerInfo('my-mcp-server', '1.0.0');
+agenetix.setServerInfo('my-mcp-server', '1.0.0');
 
 // Wrap your tool handlers with trace()
-const result = await mcpstack.trace('get_user', async () => {
+const result = await agenetix.trace('get_user', async () => {
   return await api.getUser(userId);
 });
 ```
 
 ## API
 
-### `McpStackTelemetry`
+### `EmcyTelemetry`
 
 The main class for telemetry.
 
 ```typescript
-const mcpstack = new McpStackTelemetry({
+const agenetix = new EmcyTelemetry({
   apiKey: string;           // Required: Your Agenetix API key
   endpoint?: string;        // Optional: Telemetry endpoint (default: https://api.agenetix.com/api/v1/telemetry)
   mcpServerId?: string;     // Optional: MCP server ID for grouping
@@ -65,7 +65,7 @@ const mcpstack = new McpStackTelemetry({
 Set server metadata included with all events.
 
 ```typescript
-mcpstack.setServerInfo('my-server', '1.2.3');
+agenetix.setServerInfo('my-server', '1.2.3');
 ```
 
 ### `trace<T>(toolName, fn)`
@@ -73,7 +73,7 @@ mcpstack.setServerInfo('my-server', '1.2.3');
 Wrap an async function to track its execution.
 
 ```typescript
-const result = await mcpstack.trace('search_products', async () => {
+const result = await agenetix.trace('search_products', async () => {
   return await api.searchProducts(query);
 });
 ```
@@ -89,7 +89,7 @@ The trace automatically captures:
 Manually track a tool invocation.
 
 ```typescript
-mcpstack.trackInvocation({
+agenetix.trackInvocation({
   toolName: 'get_user',
   startTime: Date.now(),
   endTime: Date.now() + 150,
@@ -103,7 +103,7 @@ mcpstack.trackInvocation({
 Force send all pending events. Called automatically on interval.
 
 ```typescript
-await mcpstack.flush();
+await agenetix.flush();
 ```
 
 ### `shutdown()`
@@ -111,7 +111,7 @@ await mcpstack.flush();
 Flush and stop the telemetry client.
 
 ```typescript
-await mcpstack.shutdown();
+await agenetix.shutdown();
 ```
 
 ## Configuration
@@ -122,19 +122,19 @@ The SDK reads these environment variables:
 
 | Variable | Description |
 |----------|-------------|
-| `MCPSTACK_API_KEY` | Your Agenetix API key (required) |
-| `MCPSTACK_TELEMETRY_URL` | Telemetry endpoint URL |
-| `MCPSTACK_MCP_SERVER_ID` | MCP server ID for grouping |
-| `MCPSTACK_DEBUG` | Set to `true` for debug logs |
+| `AGENETIX_API_KEY` | Your Agenetix API key (required) |
+| `AGENETIX_TELEMETRY_URL` | Telemetry endpoint URL |
+| `AGENETIX_MCP_SERVER_ID` | MCP server ID for grouping |
+| `AGENETIX_DEBUG` | Set to `true` for debug logs |
 
 ### With @agenetix/openapi-to-mcp
 
-If you generated your MCP server with [@agenetix/openapi-to-mcp](https://www.npmjs.com/package/@agenetix/openapi-to-mcp) and the `--mcpstack` flag, the SDK is already integrated. Just set your environment variables:
+If you generated your MCP server with [@agenetix/openapi-to-mcp](https://www.npmjs.com/package/@agenetix/openapi-to-mcp) and the `--agenetix` flag, the SDK is already integrated. Just set your environment variables:
 
 ```bash
-MCPSTACK_API_KEY=your-api-key
-MCPSTACK_TELEMETRY_URL=https://api.agenetix.com/api/v1/telemetry
-MCPSTACK_MCP_SERVER_ID=mcp_xxxxxxxxxxxx
+AGENETIX_API_KEY=your-api-key
+AGENETIX_TELEMETRY_URL=https://api.agenetix.com/api/v1/telemetry
+AGENETIX_MCP_SERVER_ID=mcp_xxxxxxxxxxxx
 ```
 
 ## Example: Manual Integration
@@ -142,13 +142,13 @@ MCPSTACK_MCP_SERVER_ID=mcp_xxxxxxxxxxxx
 ```typescript
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { CallToolRequestSchema } from "@modelcontextprotocol/sdk/types.js";
-import { McpStackTelemetry } from '@agenetix/sdk';
+import { EmcyTelemetry } from '@agenetix/sdk';
 
-const mcpstack = new McpStackTelemetry({
-  apiKey: process.env.MCPSTACK_API_KEY!,
+const agenetix = new EmcyTelemetry({
+  apiKey: process.env.AGENETIX_API_KEY!,
 });
 
-mcpstack.setServerInfo('my-server', '1.0.0');
+agenetix.setServerInfo('my-server', '1.0.0');
 
 const server = new Server(
   { name: 'my-server', version: '1.0.0' },
@@ -159,7 +159,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name: toolName, arguments: args } = request.params;
   
   // Wrap the tool execution with telemetry
-  return mcpstack.trace(toolName, async () => {
+  return agenetix.trace(toolName, async () => {
     switch (toolName) {
       case 'get_data':
         return await getData(args);
@@ -171,7 +171,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 // Graceful shutdown
 process.on('SIGINT', async () => {
-  await mcpstack.shutdown();
+  await agenetix.shutdown();
   process.exit(0);
 });
 ```
@@ -205,7 +205,7 @@ interface ToolInvocation {
 Point the SDK at your own telemetry endpoint:
 
 ```typescript
-const mcpstack = new McpStackTelemetry({
+const agenetix = new EmcyTelemetry({
   apiKey: 'your-key',
   endpoint: 'https://your-server.com/api/v1/telemetry',
 });
