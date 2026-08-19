@@ -6,7 +6,7 @@
  * When used with Agenetix platform, provide the API key from your dashboard.
  */
 
-export interface McpStackTelemetryConfig {
+export interface EmcyTelemetryConfig {
   /**
    * API key for authentication. Required.
    * Get this from the Agenetix dashboard or your self-hosted telemetry server.

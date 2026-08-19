@@ -33,14 +33,14 @@ export class TelemetryTransport {
         
         if (response.ok) {
           if (this.debug) {
-            console.error(`[mcpstack] Sent ${batch.invocations.length} invocations`);
+            console.error(`[agenetix] Sent ${batch.invocations.length} invocations`);
           }
           return true;
         }
         
         // Don't retry on 4xx errors (client errors)
         if (response.status >= 400 && response.status < 500) {
-          console.error(`[mcpstack] Client error: ${response.status} ${response.statusText}`);
+          console.error(`[agenetix] Client error: ${response.status} ${response.statusText}`);
           return false;
         }
         
@@ -55,7 +55,7 @@ export class TelemetryTransport {
       }
     }
     
-    console.error(`[mcpstack] Failed to send telemetry after ${MAX_RETRIES} attempts:`, lastError?.message);
+    console.error(`[agenetix] Failed to send telemetry after ${MAX_RETRIES} attempts:`, lastError?.message);
     return false;
   }
   
